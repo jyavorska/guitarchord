@@ -7,6 +7,17 @@ import { Chord } from "tonal";
 
 export default function Home() {
   const [isLoaded, setLoaded] = useState(false);
+  const [delay, setDelay] = useState(0.04);
+  const [forms, setForms] = useState<string[]>(["M", "maj7", "7", "m7", "9"]);
+  const [tonics, setTonics] = useState<string[]>([
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "A",
+    "B",
+  ]);
   const sampler = useRef<Tone.Sampler | null>(null);
   const [tonic, setTonic] = useState("");
   const [form, setForm] = useState("");
@@ -15,16 +26,15 @@ export default function Home() {
     Tone.loaded().then(() => {
       if (sampler.current) {
         Tone.start();
-        const delay = 0.04;
         const chord = tonic + form;
         const notes = Chord.notes(chord, `${tonic}3`);
         const now = Tone.now();
         notes.map((note, index) => {
           if (note && sampler.current) {
-              sampler.current.triggerAttack(note, now + delay * index);
+            sampler.current.triggerAttack(note, now + delay * index);
           }
         });
-        sampler.current.triggerRelease(notes, now + 2);
+        sampler.current.triggerRelease(notes, now + (delay * notes.length + 2));
       }
     });
   };
@@ -36,8 +46,6 @@ export default function Home() {
   };
 
   const setRandomChord = () => {
-    const tonics = ["C", "D", "E", "F", "G", "A", "B"];
-    const forms = ["", "m", "maj7", "7", "m7", "9"];
     setTonic(tonics[Math.floor(Math.random() * tonics.length)]);
     setForm(forms[Math.floor(Math.random() * forms.length)]);
   };
@@ -88,7 +96,66 @@ export default function Home() {
               </button>
             ))}
           </div>
-          <a target="_blank" href={`https://jguitar.com/chordsearch/${tonic}${form}`}>See chord diagrams for {tonic + form}</a>
+          <a
+            target="_blank"
+            href={`https://jguitar.com/chordsearch/${tonic}${form}`}
+          >
+            See chord diagrams for {tonic + form}
+          </a>
+        </details>
+        <details>
+          <summary>Settings</summary>
+          <div>
+            <label htmlFor="delay">Delay: </label>
+            <input
+              type="number"
+              id="delay"
+              value={delay}
+              onChange={(e) => {
+                setDelay(Number(e.target.value));
+              }}
+            />
+          </div>
+          <div>
+            <label htmlFor="tonics">Tonics: </label>
+            <select
+              value={tonics}
+              name="tonics"
+              id="tonics"
+              multiple
+              onChange={(e) => {
+                const selectedOptions = Array.from(e.target.selectedOptions);
+                setTonics(selectedOptions.map((option) => option.value));
+              }}
+            >
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="G">G</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="forms">Forms: </label>
+            <select
+              value={forms}
+              name="forms"
+              id="forms"
+              multiple
+              onChange={(e) => {
+                const selectedOptions = Array.from(e.target.selectedOptions);
+                setForms(selectedOptions.map((option) => option.value));
+              }}
+            >
+              <option value="M">M</option>
+              <option value="maj7">maj7</option>
+              <option value="7">7</option>
+              <option value="m7">m7</option>
+              <option value="9">9</option>
+            </select>
+          </div>
         </details>
       </main>
     </div>
