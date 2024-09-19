@@ -72,7 +72,7 @@ export default function Home() {
   }, [tonic, form]);
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <button disabled={!isLoaded} onClick={playChord}>
           (re)play
@@ -106,7 +106,7 @@ export default function Home() {
         <details>
           <summary>Settings</summary>
           <div>
-            <label htmlFor="delay">Delay: </label>
+            <label htmlFor="delay">Strum delay: </label>
             <input
               type="number"
               id="delay"
@@ -128,6 +128,7 @@ export default function Home() {
                 setTonics(selectedOptions.map((option) => option.value));
               }}
             >
+              {/* TODO generate this list automatically */}
               <option value="C">C</option>
               <option value="D">D</option>
               <option value="E">E</option>
@@ -149,6 +150,7 @@ export default function Home() {
                 setForms(selectedOptions.map((option) => option.value));
               }}
             >
+              {/* TODO generate this list automatically */}
               <option value="M">M</option>
               <option value="maj7">maj7</option>
               <option value="7">7</option>
