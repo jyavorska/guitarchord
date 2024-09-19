@@ -88,6 +88,7 @@ export default function Home() {
               </button>
             ))}
           </div>
+          <a target="_blank" href={`https://jguitar.com/chordsearch/${tonic}${form}`}>See chord diagrams for {tonic + form}</a>
         </details>
       </main>
     </div>
