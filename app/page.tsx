@@ -7,7 +7,6 @@ import { Chord } from "tonal";
 
 export default function Home() {
   const [isLoaded, setLoaded] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const sampler = useRef<Tone.Sampler | null>(null);
   const [tonic, setTonic] = useState("");
   const [form, setForm] = useState("");
