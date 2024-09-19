@@ -98,7 +98,7 @@ export default function Home() {
           </div>
           <a
             target="_blank"
-            href={`https://jguitar.com/chordsearch?chordsearch=${encodeURIComponent(tonic+form)}&labels=none`}
+            href={`https://jguitar.com/chordsearch/${encodeURIComponent(tonic+form)}`}
           >
             See chord diagrams for {tonic + form}
           </a>
